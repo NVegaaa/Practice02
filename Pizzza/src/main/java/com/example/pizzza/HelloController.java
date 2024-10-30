@@ -35,49 +35,79 @@ public class HelloController {
     private Button register;
 
     @FXML
-    void initialize() {
-        register.setOnAction(event ->{
-            register.getScene().getWindow().hide();
+    //void initialize() {
+        //register.setOnAction(event ->{
+        //    register.getScene().getWindow().hide();
 
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("register.fxml"));
+        //    FXMLLoader loader = new FXMLLoader();
+        //    loader.setLocation(getClass().getResource("register.fxml"));
 
 
+        //    try {
+        //        loader.load();
+        //    } catch (IOException e) {
+        //        throw new RuntimeException(e);
+        //    }
+
+        //    Parent root = loader.getRoot();
+        //    Stage stage = new Stage();
+        //    stage.setScene(new Scene(root));
+        //    stage.showAndWait();
+        //});
+
+
+            //login.setOnAction(event ->{
+            //login.getScene().getWindow().hide();
+
+
+            //FXMLLoader loader = new FXMLLoader();
+            //loader.setLocation(getClass().getResource("firstmenu.fxml"));
+
+
+            //try {
+            //    loader.load();
+            //} catch (IOException e) {
+            //    throw new RuntimeException(e);
+            //}
+
+
+            //Parent root = loader.getRoot();
+            //Stage stage = new Stage();
+            //stage.setScene(new Scene(root));
+            //stage.showAndWait();
+
+        //});
+
+    private void loginButClicked(ActionEvent event) {
+        String login = loginfield.getText();
+        String password = passwordfield.getText();
+        LoginConnection loginConnection = new LoginConnection();
+
+        if (loginConnection.checkLogin(login, password)) {
             try {
-                loader.load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("firstmenu.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+
+                Node source = (Node) event.getSource();
+                Stage currentStage = (Stage) source.getScene().getWindow();
+                currentStage.close();
+
+                stage.show();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
+        } else {
+            System.out.println("Error");
+        }
+    }
 
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        });
-
-
-            loginbut.setOnAction(event ->{
-            loginbut.getScene().getWindow().hide();
-
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("firstmenu.fxml"));
-
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-
-        });
-
+    @FXML
+    private void goToRegister(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("registration.fxml"));
+        Stage stage = (Stage) register.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 }
 

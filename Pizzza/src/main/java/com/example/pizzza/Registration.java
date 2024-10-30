@@ -38,32 +38,52 @@ public class Registration {
     private Button registration;
 
     @FXML
-    void initialize() {
+    public void register(ActionEvent event) {
+        String Name = NameField.getText();
+        String Surname = SurnameField.getText();
+        String login = LoginReg.getText();
+        String password = PasswordReg.getText();
+
+        LoginConnection loginConnection = new LoginConnection();
+        loginConnection.createUser(Name, Surname, login, password);
+
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+            Parent root = loader.load();
+            Stage primaryStage = new Stage();
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
 
 
-
-        registration.setOnAction(event -> {
-            registration.getScene().getWindow().hide();
-
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("hello-view.fxml"));
+        //registration.setOnAction(event -> {
+        //    registration.getScene().getWindow().hide();
 
 
-            try {
-                loader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        //    FXMLLoader loader = new FXMLLoader();
+        //    loader.setLocation(getClass().getResource("hello-view.fxml"));
 
 
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        //    try {
+        //        loader.load();
+        //    } catch (IOException e) {
+        //        throw new RuntimeException(e);
+        //    }
 
-        });
+
+        //    Parent root = loader.getRoot();
+        //    Stage stage = new Stage();
+        //    stage.setScene(new Scene(root));
+        //    stage.show();
+
+        //});
 
 
     }
